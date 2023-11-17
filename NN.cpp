@@ -22,6 +22,8 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     // get weights and biases of input->hiddenLayer
     string bias, weight;
     for (int h = 0; h < hiddenLayerNodes; h++) {
+        getline(file, line);
+        stringstream buffer(line);
         buffer >> bias;
         hiddenLayerBiases.push_back(stod(bias));
         inputToHiddenLayerWeights.push_back(new vector<double>());
@@ -32,6 +34,8 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     }
     // get weights and biases of hiddenLayer->output
     for (int o = 0; o < outputNodes; o++) {
+        getline(file, line);
+        stringstream buffer(line);
         buffer >> bias;
         outputBiases.push_back(stod(bias));
         hiddenLayerToOutputWeights.push_back(new vector<double>());

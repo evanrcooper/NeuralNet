@@ -14,14 +14,22 @@ class NeuralNet {
             hiddenLayerBiases = vector<double>();
             outputBiases = vector<double>();
         }
+        ~NeuralNet() {
+            for (int h = 0; h < hiddenLayerNodes; h++) {
+                delete inputToHiddenLayerWeights[h];
+            }
+            for (int o = 0; o < outputNodes; o++) {
+                delete hiddenLayerToOutputWeights[o];
+            }
+        }
         void buildNeuralNet(string inputFileName);
         vector<double> runNeuralNet(const vector<double> &inputs);
     private:
         int inputNodes = 0; // number of input nodes
         int hiddenLayerNodes = 0; // number of nodes in the hidden layer
         int outputNodes = 0; // number of output nodes
-        vector<vector<double>*> inputToHiddenLayerWeights; // inputToHiddenLayerWeights[hidden][output]
-        vector<vector<double>*> hiddenLayerToOutputWeights; // hiddenLayerToOutputWeights[input][hidden]
+        vector<vector<double>*> inputToHiddenLayerWeights; // inputToHiddenLayerWeights[hidden][input]
+        vector<vector<double>*> hiddenLayerToOutputWeights; // hiddenLayerToOutputWeights[output][hidden]
         vector<double> hiddenLayerBiases; // hiddenLayerBiases[hidden]
         vector<double> outputBiases; // outputBiases[output]
         // 1 / (1 + e^n)

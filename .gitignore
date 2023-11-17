@@ -2,3 +2,6 @@
 *.exe
 *.o
 *.txt
+
+# .vscode
+settings.json

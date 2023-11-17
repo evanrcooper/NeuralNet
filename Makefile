@@ -1,7 +1,7 @@
 main.exe: main.o NN.o
 	g++ -o main.exe main.o NN.o
 
-main.o: main.cpp NN.h
+main.o: main.cpp NN.cpp NN.h
 	g++ -c main.cpp
 
 NN.o: NN.cpp NN.h

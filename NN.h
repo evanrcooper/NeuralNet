@@ -30,7 +30,7 @@ class NeuralNet {
         void buildNeuralNet(string inputFileName);
 
         // runs the neural net on a single input case
-        inline vector<double> runNeuralNet(const vector<double> &inputs);
+        [[nodiscard]] vector<double> runNeuralNet(const vector<double> &inputs) const;
 
     private:
 
@@ -44,5 +44,5 @@ class NeuralNet {
         vector<double> outputBiases; // outputBiases[output]
 
         // 1 / (1 + e^n)
-        inline double sigmoid(double n) {return 1/(1+exp(n));}
+        [[nodiscard]] inline double sigmoid(double n) const {return 1/(1+exp(n));}
 };

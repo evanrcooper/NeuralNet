@@ -52,7 +52,7 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
-inline vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs) {
+[[nodiscard]] vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs) const {
     // calculate the values of the hidden layer nodes
     vector<double> hiddenLayerValues = vector<double>();
     for (int h = 0; h < hiddenLayerNodes; h++) {

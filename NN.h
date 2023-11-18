@@ -47,6 +47,6 @@ class NeuralNet {
         vector<double> hiddenLayerBiases; // hiddenLayerBiases[hidden]
         vector<double> outputBiases; // outputBiases[output]
 
-        // 1 / (1 + e^n)
-        [[nodiscard]] inline double sigmoid(double n) const {return 1/(1+exp(n));}
+        // 1 / (1 + e^d)
+        [[nodiscard]] inline double sigmoid(double d) const {return 1/(1+exp(d));}
 };

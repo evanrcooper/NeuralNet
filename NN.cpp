@@ -52,6 +52,15 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
+void saveNeuralNet(string outputFileName) {
+    ofstream file(outputFileName);
+    if (!file.is_open()) {
+        cerr << "Error Creating File";
+    }
+    file << "temporary text";
+    return;
+}
+
 [[nodiscard]] vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs) const {
     // calculate the values of the hidden layer nodes
     vector<double> hiddenLayerValues = vector<double>();

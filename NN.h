@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <ostream>
 #include <sstream>
 
 using namespace std;
@@ -28,6 +29,9 @@ class NeuralNet {
 
         // builds the neural net from an input file
         void buildNeuralNet(string inputFileName);
+
+        // saves the weights and biases to a file
+        void saveNeuralNet(string outputFileName);
 
         // runs the neural net on a single input case
         [[nodiscard]] vector<double> runNeuralNet(const vector<double> &inputs) const;

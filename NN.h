@@ -42,8 +42,8 @@ class NeuralNet {
         int hiddenLayerNodes = 0; // number of nodes in the hidden layer
         int outputNodes = 0; // number of output nodes
         
-        vector<vector<double>*> inputToHiddenLayerWeights; // inputToHiddenLayerWeights[hidden][input]
-        vector<vector<double>*> hiddenLayerToOutputWeights; // hiddenLayerToOutputWeights[output][hidden]
+        vector<vector<double>*> inputToHiddenLayerWeights; // (*inputToHiddenLayerWeights[hidden])[input]
+        vector<vector<double>*> hiddenLayerToOutputWeights; // (*hiddenLayerToOutputWeights[output])[hidden]
         vector<double> hiddenLayerBiases; // hiddenLayerBiases[hidden]
         vector<double> outputBiases; // outputBiases[output]
 

@@ -52,12 +52,27 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
-void saveNeuralNet(string outputFileName) {
+void NeuralNet::saveNeuralNet(string outputFileName) {
     ofstream file(outputFileName);
     if (!file.is_open()) {
         cerr << "Error Creating File";
     }
-    file << "temporary text";
+    file << inputNodes << " " << hiddenLayerNodes << " " << outputNodes << "\n";
+    for (int h = 0; h < hiddenLayerNodes; h++) {
+        if (h != 0) {file << "\n";}
+        for (int i = 0; i < inputNodes; i++) {
+            if (i != 0) {file << " ";}
+            file << (*inputToHiddenLayerWeights[h])[i];
+        }
+    }
+    for (int o = 0; o < outputNodes; o++) {
+        if (o != 0) {file << "\n";}
+        for (int h = 0; h < hiddenLayerNodes; h++) {
+            if (h != 0) {file << " ";}
+            file << (*hiddenLayerToOutputWeights[o])[h];
+        }
+    }
+    file.close();
     return;
 }
 

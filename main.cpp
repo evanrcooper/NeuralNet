@@ -9,6 +9,7 @@ int main() {
     NeuralNet net = NeuralNet();
     net.buildNeuralNet("testTrained.txt");
     test(net);
+    net.saveNeuralNet("testOut.txt");
     return 0;
 }
 

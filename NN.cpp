@@ -52,6 +52,28 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
+string doubleToString(double d, int decimals = 3) {
+    string doubleAsString = to_string(d);
+    string preciseDouble= "";
+    for (int i = 0; i < doubleAsString.length(); i++) {
+        if (doubleAsString[i] != '.') {
+            preciseDouble.push_back(doubleAsString[i]);
+            continue;
+        } else {
+            preciseDouble.push_back('.');
+            for (int j = 0; j < decimals; j++) {
+                if (i+j < doubleAsString.length()) {
+                    preciseDouble.push_back(doubleAsString[i+j]);
+                } else {
+                    preciseDouble.push_back('0');
+                }
+            }
+            break;
+        }
+    }
+    return preciseDouble;
+}
+
 void NeuralNet::saveNeuralNet(string outputFileName) {
     ofstream file(outputFileName);
     if (!file.is_open()) {
@@ -60,18 +82,18 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
     file << inputNodes << " " << hiddenLayerNodes << " " << outputNodes << "\n";
     for (int h = 0; h < hiddenLayerNodes; h++) {
         if (h != 0) {file << "\n";}
-        file << hiddenLayerBiases[h] << " ";
+        file << doubleToString(hiddenLayerBiases[h]) << " ";
         for (int i = 0; i < inputNodes; i++) {
             if (i != 0) {file << " ";}
-            file << (*inputToHiddenLayerWeights[h])[i];
+            file << doubleToString((*inputToHiddenLayerWeights[h])[i]);
         }
     }
     for (int o = 0; o < outputNodes; o++) {
         file << "\n";
-        file << outputBiases[o] << " ";
+        file << doubleToString(outputBiases[o]) << " ";
         for (int h = 0; h < hiddenLayerNodes; h++) {
             if (h != 0) {file << " ";}
-            file << (*hiddenLayerToOutputWeights[o])[h];
+            file << doubleToString((*hiddenLayerToOutputWeights[o])[h]);
         }
     }
     file.close();

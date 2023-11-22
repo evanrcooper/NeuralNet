@@ -61,6 +61,7 @@ string doubleToString(double d, int decimals = 3) {
             continue;
         } else {
             preciseDouble.push_back('.');
+            i++;
             for (int j = 0; j < decimals; j++) {
                 if (i+j < doubleAsString.length()) {
                     preciseDouble.push_back(doubleAsString[i+j]);

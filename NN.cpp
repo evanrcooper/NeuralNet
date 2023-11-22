@@ -52,7 +52,7 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
-string doubleToString(double d, int decimals = 3) {
+string NeuralNet::doubleToString(double d, int decimals = 3) const {
     string doubleAsString = to_string(d);
     string preciseDouble= "";
     for (int i = 0; i < doubleAsString.length(); i++) {

@@ -49,4 +49,7 @@ class NeuralNet {
 
         // 1 / (1 + e^d)
         [[nodiscard]] inline double sigmoid(double d) const {return 1/(1+exp(d));}
+
+        // helper function for printing doubles up to given decimal places
+        [[nodiscard]] string doubleToString(double d, int decimals = 3) const;
 };

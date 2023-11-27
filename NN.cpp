@@ -22,6 +22,10 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     hiddenLayerNodes = stoi(hNodes);
     outputNodes = stoi(outNodes);
 
+    if (inputNodes == 0 || hiddenLayerNodes == 0 || outputNodes == 0) {
+        cerr << "Invalid Neural Net Structure";
+    }
+
     // get weights and biases of input->hiddenLayer
     string bias, weight;
     for (int h = 0; h < hiddenLayerNodes; h++) {
@@ -52,7 +56,7 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
-string NeuralNet::doubleToString(double d, int decimals = 3) const {
+string NeuralNet::doubleToString(double d, int decimals) const {
     string doubleAsString = to_string(d);
     string preciseDouble= "";
     for (int i = 0; i < doubleAsString.length(); i++) {
@@ -123,4 +127,39 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
     }
     
     return outputNodeValues;
+}
+
+void NeuralNet::trainNeuralNet(const string &testSetFile, const unsigned short int &epochs) {
+    // open file
+    fstream file;
+    file.open(testSetFile);
+    if (!file.is_open()) {
+        cerr << "File Does Not Exist";
+    }
+
+    string line, testCasesStr, testInputsStr, testOutputsStr;
+    getline(file, line);
+    stringstream buffer(line);
+
+    buffer >> testCasesStr;
+    buffer >> testInputsStr;
+    buffer >> testOutputsStr;
+
+    if (inputNodes != stoi(testInputsStr) && outputNodes != stoi(testOutputsStr)) {
+        cerr << "Test File Is Not Compatible With Neural Net";
+    }
+
+    for (int e = 0; e < epochs; e++) {
+        getline(file, line);
+        stringstream buffer(line);
+        vector<double> inputs = vector<double>(inputNodes);
+
+        for (int i = 0; i < inputNodes; i++) {
+            string currentInput;
+            buffer << currentInput;
+            inputs[i] = stod(currentInput);
+        }
+
+        vector<double> outputs = runNeuralNet(inputs);
+    } 
 }

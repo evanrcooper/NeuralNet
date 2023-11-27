@@ -36,6 +36,9 @@ class NeuralNet {
         // runs the neural net on a single input case
         [[nodiscard]] vector<double> runNeuralNet(const vector<double> &inputs) const;
 
+        // trains the neural net on the given test set for specified epochs
+        void trainNeuralNet(const string &testSetFile, const unsigned short int &epochs);
+
     private:
 
         int inputNodes = 0; // number of input nodes

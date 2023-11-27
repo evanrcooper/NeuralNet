@@ -112,6 +112,7 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
         double hiddenNodeValue = 0;
         for (int i = 0; i < inputNodes; i++) {
             hiddenNodeValue += inputs[i] * (*inputToHiddenLayerWeights[h])[i];
+            // hiddenNodeValue += (inputs[i] >= 0.5) ? (*inputToHiddenLayerWeights[h])[i] : (-1)*(*inputToHiddenLayerWeights[h])[i];
         }
         hiddenLayerValues.push_back(sigmoid(hiddenNodeValue - hiddenLayerBiases[h]));
     }
@@ -145,21 +146,47 @@ void NeuralNet::trainNeuralNet(const string &testSetFile, const unsigned short i
     buffer >> testInputsStr;
     buffer >> testOutputsStr;
 
+    int testCases = stoi(testCasesStr);
+
     if (inputNodes != stoi(testInputsStr) && outputNodes != stoi(testOutputsStr)) {
         cerr << "Test File Is Not Compatible With Neural Net";
     }
 
     for (int e = 0; e < epochs; e++) {
-        getline(file, line);
-        stringstream buffer(line);
-        vector<double> inputs = vector<double>(inputNodes);
+        for (int t = 0; t < testCases; t++) {
 
-        for (int i = 0; i < inputNodes; i++) {
-            string currentInput;
-            buffer << currentInput;
-            inputs[i] = stod(currentInput);
+            getline(file, line);
+            stringstream buffer(line);
+            vector<double> inputs = vector<double>(inputNodes);
+
+            for (int i = 0; i < inputNodes; i++) {
+                string currentInput;
+                buffer << currentInput;
+                inputs[i] = stod(currentInput);
+            }
+
+            vector<double> outputs = runNeuralNet(inputs);
+
         }
 
-        vector<double> outputs = runNeuralNet(inputs);
-    } 
+        vector<double> outputDeltas = vector<double>(outputNodes);
+
+        for (int o = 0; o < outputNodes; o++) {
+            // sig'(x) = node_output*(1-node_output)
+            // int sigPrime = 1; // TODO
+            // outputDeltas[o] = sigPrime * (desiredOutputs[o] - outputs[o]); // TODO
+        }
+
+        vector<double> hiddenLayerDeltas = vector<double>(hiddenLayerNodes);
+
+        for (int h = 0; h < hiddenLayerNodes; h++) {
+            // sig'(x) = node_output*(1-node_output)
+            // int sigPrime = 1; // TODO
+            // hiddenLayerDeltas[h] = // TODO
+        }
+
+        // update weights
+        // TODO
+
+    }
 }

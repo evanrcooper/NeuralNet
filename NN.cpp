@@ -172,16 +172,12 @@ void NeuralNet::trainNeuralNet(const string &testSetFile, const unsigned short i
         vector<double> outputDeltas = vector<double>(outputNodes);
 
         for (int o = 0; o < outputNodes; o++) {
-            // sig'(x) = node_output*(1-node_output)
-            // int sigPrime = 1; // TODO
-            // outputDeltas[o] = sigPrime * (desiredOutputs[o] - outputs[o]); // TODO
+            // outputDeltas[o] = sigmoidPrime(nodeOutput) * (desiredOutputs[o] - outputs[o]); // TODO
         }
 
         vector<double> hiddenLayerDeltas = vector<double>(hiddenLayerNodes);
 
         for (int h = 0; h < hiddenLayerNodes; h++) {
-            // sig'(x) = node_output*(1-node_output)
-            // int sigPrime = 1; // TODO
             // hiddenLayerDeltas[h] = // TODO
         }
 

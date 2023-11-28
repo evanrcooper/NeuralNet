@@ -13,7 +13,7 @@ int main() {
     return 0;
 }
 
-void test(const NeuralNet &net) {
+void test(NeuralNet &net) {
     // open file
     fstream file;
     file.open("testSet.txt");

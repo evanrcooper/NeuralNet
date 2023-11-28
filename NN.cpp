@@ -105,16 +105,25 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
     return;
 }
 
-[[nodiscard]] vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs) const {
+vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs) {
     // calculate the values of the hidden layer nodes
     vector<double> hiddenLayerValues = vector<double>();
+    
+    if (hiddenLayerOutputs) {
+        hiddenLayerOutputs->clear();
+    }
+
     for (int h = 0; h < hiddenLayerNodes; h++) {
         double hiddenNodeValue = 0;
         for (int i = 0; i < inputNodes; i++) {
             hiddenNodeValue += inputs[i] * (*inputToHiddenLayerWeights[h])[i];
             // hiddenNodeValue += (inputs[i] >= 0.5) ? (*inputToHiddenLayerWeights[h])[i] : (-1)*(*inputToHiddenLayerWeights[h])[i];
         }
-        hiddenLayerValues.push_back(sigmoid(hiddenNodeValue - hiddenLayerBiases[h]));
+        int hiddenOut = sigmoid(hiddenNodeValue - hiddenLayerBiases[h]);
+        hiddenLayerValues.push_back(hiddenOut);
+        if (hiddenLayerOutputs) {
+            hiddenLayerOutputs->push_back(hiddenOut);
+        }
     }
 
     // calculate the values of the output nodes
@@ -152,37 +161,48 @@ void NeuralNet::trainNeuralNet(const string &testSetFile, const unsigned short i
         cerr << "Test File Is Not Compatible With Neural Net";
     }
 
-    for (int e = 0; e < epochs; e++) {
+    // for (int e = 0; e < epochs; e++) {
         for (int t = 0; t < testCases; t++) {
 
             getline(file, line);
             stringstream buffer(line);
             vector<double> inputs = vector<double>(inputNodes);
+            vector<double> desiredOutputs = vector<double>(outputNodes);
 
+            string currentInput;
             for (int i = 0; i < inputNodes; i++) {
-                string currentInput;
                 buffer << currentInput;
                 inputs[i] = stod(currentInput);
             }
 
-            vector<double> outputs = runNeuralNet(inputs);
+            string currentOutput;
+            for (int d = 0; d < outputNodes; d++) {
+                buffer << currentOutput;
+                desiredOutputs[d] = stod(currentOutput);
+            }
+
+            vector<double> hiddenlayerOutputs = vector<double>();
+
+            vector<double> outputs = runNeuralNet(inputs, &hiddenlayerOutputs);
+
+            vector<double> outputDeltas = vector<double>(outputNodes); // output deltas
+            vector<double> hiddenLayerDeltas = vector<double>(hiddenLayerNodes, 0.0);
+
+            for (int o = 0; o < outputNodes; o++) {
+                outputDeltas[o] = sigmoidPrime(outputs[o]) * (desiredOutputs[o] - outputs[o]);
+            }
+
+            for (int h = 0; h < hiddenLayerNodes; h++) {
+                for (int o = 0; o < outputNodes; o++) {
+                    hiddenLayerDeltas[h] += (*hiddenLayerToOutputWeights[o])[h] * outputDeltas[o];
+                }
+                hiddenLayerDeltas[h] *= sigmoidPrime(hiddenlayerOutputs[h]);
+            }
+
+            // update weights
+            // TODO
 
         }
 
-        vector<double> outputDeltas = vector<double>(outputNodes);
-
-        for (int o = 0; o < outputNodes; o++) {
-            // outputDeltas[o] = sigmoidPrime(nodeOutput) * (desiredOutputs[o] - outputs[o]); // TODO
-        }
-
-        vector<double> hiddenLayerDeltas = vector<double>(hiddenLayerNodes);
-
-        for (int h = 0; h < hiddenLayerNodes; h++) {
-            // hiddenLayerDeltas[h] = // TODO
-        }
-
-        // update weights
-        // TODO
-
-    }
+    // }
 }

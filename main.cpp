@@ -30,18 +30,24 @@ void test(const NeuralNet &net) {
 
     int wrong = 0;
     for (int t = 0; t < stoi(testSetLength); t++) {
+
         getline(file, line);
         stringstream buffer(line);
+
         vector<double> inputs = vector<double>();
+
         for (int i = 0; i < stoi(inputLength); i++) {
             buffer >> input;
             inputs.push_back(stod(input));
         }
+
         buffer >> output;
         if (static_cast<int>(round(net.runNeuralNet(inputs)[0])) != stoi(output)) {
             cout << net.runNeuralNet(inputs)[0] << "\n";
             wrong++;
         }
+
     }
+    
     cout << "\n" << wrong << "\n\n";
 }

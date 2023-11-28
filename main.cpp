@@ -24,6 +24,7 @@ void test(const NeuralNet &net) {
     string line, testSetLength, inputLength, outputLength, input, output;
     getline(file, line);
     stringstream buffer(line);
+    
     buffer >> testSetLength;
     buffer >> inputLength;
     buffer >> outputLength;
@@ -48,6 +49,6 @@ void test(const NeuralNet &net) {
         }
 
     }
-    
+
     cout << "\n" << wrong << "\n\n";
 }

@@ -37,7 +37,7 @@ class NeuralNet {
         vector<double> runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs = nullptr);
 
         // trains the neural net on the given test set for specified epochs
-        void trainNeuralNet(const string &trainingSetFile, const unsigned short int &epochs, const double &learningRate);
+        void trainNeuralNet(const string &trainingSetFile, const unsigned long int &epochs, const double &learningRate);
 
     private:
 

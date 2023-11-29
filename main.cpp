@@ -9,7 +9,7 @@ int main() {
     NeuralNet net = NeuralNet();
     net.buildNeuralNet("testUntrained.txt");
     int before = test(net);
-    net.trainNeuralNet("trainingSet.txt", 100, 0.05);
+    net.trainNeuralNet("trainingSet.txt", 100, 0.1);
     int after = test(net);
     cout << "\nBefore: " << before << ", After: " << after << "\n";
     net.saveNeuralNet("testOut.txt");

@@ -141,7 +141,7 @@ vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<doub
     return outputNodeValues;
 }
 
-void NeuralNet::trainNeuralNet(const string &trainingSetFile, const unsigned short int &epochs, const double &learningRate) {
+void NeuralNet::trainNeuralNet(const string &trainingSetFile, const unsigned long int &epochs, const double &learningRate) {
     
     // check file
     fstream file;
@@ -218,14 +218,14 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
         // input -> hidden
         for (int h = 0; h < hiddenLayerNodes; h++) {
             for (int i = 0; i < inputNodes; i++) {
-                (*inputToHiddenLayerWeights[h])[i] += learningRate*inputs[i]*hiddenLayerDeltas[h];
+                (*inputToHiddenLayerWeights[h])[i] += learningRate * inputs[i] * hiddenLayerDeltas[h];
             }
         }
 
         // hidden -> output
         for (int o = 0; o < outputNodes; o++) {
             for (int h = 0; h < hiddenLayerNodes; h++) {
-                (*hiddenLayerToOutputWeights[o])[h] += learningRate*hiddenlayerOutputs[h]*outputDeltas[o];
+                (*hiddenLayerToOutputWeights[o])[h] += learningRate * hiddenlayerOutputs[h] * outputDeltas[o];
             }
         }
 

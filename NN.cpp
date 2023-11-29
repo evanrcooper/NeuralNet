@@ -57,15 +57,17 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
 }
 
 string NeuralNet::doubleToString(double d, int decimals) const {
+
     string doubleAsString = to_string(d);
     string preciseDouble= "";
+    
     for (int i = 0; i < doubleAsString.length(); i++) {
         if (doubleAsString[i] != '.') {
             preciseDouble.push_back(doubleAsString[i]);
             continue;
         } else {
-            preciseDouble.push_back('.');
             i++;
+            preciseDouble.push_back('.');
             for (int j = 0; j < decimals; j++) {
                 if (i+j < doubleAsString.length()) {
                     preciseDouble.push_back(doubleAsString[i+j]);

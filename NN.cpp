@@ -121,7 +121,7 @@ vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<doub
             hiddenNodeValue += inputs[i] * (*inputToHiddenLayerWeights[h])[i];
             // hiddenNodeValue += (inputs[i] >= 0.5) ? (*inputToHiddenLayerWeights[h])[i] : (-1)*(*inputToHiddenLayerWeights[h])[i];
         }
-        int hiddenOut = sigmoid(hiddenNodeValue - hiddenLayerBiases[h]);
+        double hiddenOut = sigmoid(hiddenNodeValue - hiddenLayerBiases[h]);
         hiddenLayerValues.push_back(hiddenOut);
         if (hiddenLayerOutputs) {
             hiddenLayerOutputs->push_back(hiddenOut);

@@ -54,7 +54,7 @@ class NeuralNet {
         void singleEpoch(const string &trainingSetFile, const double &learningRate);
 
         // 1 / (1 + e^d)
-        [[nodiscard]] inline double sigmoid(double d) const {return 1/(1+exp(d));}
+        [[nodiscard]] inline double sigmoid(double d) const {return 1.0/(1.0+exp(d));}
 
         // nodeOutput * (1 - nodeOutput)
         [[nodiscard]] inline double sigmoidPrime(double nodeOutput) const {return nodeOutput*(1-nodeOutput);}

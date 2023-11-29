@@ -3,5 +3,8 @@
 *.o
 # *.txt
 
+# personal notes
+questions.txt
+
 # .vscode
 settings.json

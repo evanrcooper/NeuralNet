@@ -6,7 +6,11 @@ main.o: main.cpp NN.cpp NN.h
 
 NN.o: NN.cpp NN.h
 	g++ -c NN.cpp
-	
+
+debug:
+	g++ -g -o mainDebug.exe main.o NN.o
+	gdb mainDebug.exe
+
 clean:
 	rm -f *.exe *.o *.stackdump *~ out.txt
 

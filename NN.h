@@ -37,7 +37,7 @@ class NeuralNet {
         vector<double> runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs = nullptr);
 
         // trains the neural net on the given test set for specified epochs
-        void trainNeuralNet(const string &testSetFile, const unsigned short int &epochs, const double &learningRate);
+        void trainNeuralNet(const string &trainingSetFile, const unsigned short int &epochs, const double &learningRate);
 
     private:
 
@@ -51,7 +51,7 @@ class NeuralNet {
         vector<double> outputBiases; // outputBiases[output]
 
         // trains neural net for a single epoch on the entire test set
-        void singleEpoch(const string &testSetFile, const double &learningRate);
+        void singleEpoch(const string &trainingSetFile, const double &learningRate);
 
         // 1 / (1 + e^d)
         [[nodiscard]] inline double sigmoid(double d) const {return 1/(1+exp(d));}

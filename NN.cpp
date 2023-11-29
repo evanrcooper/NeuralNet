@@ -139,37 +139,37 @@ vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<doub
     return outputNodeValues;
 }
 
-void NeuralNet::trainNeuralNet(const string &testSetFile, const unsigned short int &epochs, const double &learningRate) {
+void NeuralNet::trainNeuralNet(const string &trainingSetFile, const unsigned short int &epochs, const double &learningRate) {
     
     // check file
     fstream file;
-    file.open(testSetFile);
+    file.open(trainingSetFile);
     if (!file.is_open()) {
         cerr << "File Does Not Exist";
     }
 
     for (int e = 0; e < epochs; e++) {
-        singleEpoch(testSetFile, learningRate);
+        singleEpoch(trainingSetFile, learningRate);
+        cout << "Epoch #" << e+1 << " Completed\n";
     }
 
     file.close();
 }
 
-void NeuralNet::singleEpoch(const string &testSetFile, const double &learningRate) {
+void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learningRate) {
 
     fstream file;
-    file.open(testSetFile);
+    file.open(trainingSetFile);
 
     string line, testCasesStr, testInputsStr, testOutputsStr;
     getline(file, line);
-    stringstream buffer(line);
+    stringstream bufferFirstLine(line);
 
-    buffer >> testCasesStr;
-    buffer >> testInputsStr;
-    buffer >> testOutputsStr;
+    bufferFirstLine >> testCasesStr;
+    bufferFirstLine >> testInputsStr;
+    bufferFirstLine >> testOutputsStr;
 
     int testCases = stoi(testCasesStr);
-
     if (inputNodes != stoi(testInputsStr) && outputNodes != stoi(testOutputsStr)) {
         cerr << "Test File Is Not Compatible With Neural Net";
     }
@@ -183,13 +183,13 @@ void NeuralNet::singleEpoch(const string &testSetFile, const double &learningRat
 
         string currentInput;
         for (int i = 0; i < inputNodes; i++) {
-            buffer << currentInput;
+            buffer >> currentInput;
             inputs[i] = stod(currentInput);
         }
 
         string currentOutput;
         for (int d = 0; d < outputNodes; d++) {
-            buffer << currentOutput;
+            buffer >> currentOutput;
             desiredOutputs[d] = stod(currentOutput);
         }
 

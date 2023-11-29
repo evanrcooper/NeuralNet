@@ -202,6 +202,32 @@ void NeuralNet::trainNeuralNet(const string &testSetFile, const unsigned short i
             // update weights
             // TODO
 
+            double learningRate = 0.1;
+
+            // input -> hidden
+            for (int h = 0; h < hiddenLayerNodes; h++) {
+                for (int i = 0; i < inputNodes; i++) {
+                    (*inputToHiddenLayerWeights[h])[i] += learningRate*inputs[i]*hiddenLayerDeltas[h];
+                }
+            }
+
+            // hidden -> output
+            for (int o = 0; o < outputNodes; o++) {
+                for (int h = 0; h < hiddenLayerNodes; h++) {
+                    (*hiddenLayerToOutputWeights[o])[h] += learningRate*hiddenlayerOutputs[h]*outputDeltas[o];
+                }
+            }
+
+            // hidden biases
+            for (int h = 0; h < hiddenLayerNodes; h++) {
+                hiddenLayerBiases[h] += (-1)*learningRate*hiddenLayerDeltas[h];
+            }
+
+            // output biases
+            for (int o = 0; o < outputNodes; o++) {
+                hiddenLayerBiases[o] += (-1)*learningRate*outputDeltas[o];
+            }
+
         }
 
     // }

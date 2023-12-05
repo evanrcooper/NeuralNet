@@ -34,7 +34,7 @@ class NeuralNet {
         void saveNeuralNet(string outputFileName);
 
         // runs the neural net on a single input case and stores the outputs of each node in the hidden layer
-        vector<double> runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs = nullptr);
+        vector<double> runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs = nullptr) const;
 
         // trains the neural net on the given test set for specified epochs
         void trainNeuralNet(const string &trainingSetFile, const unsigned long int &epochs, const double &learningRate);
@@ -54,11 +54,11 @@ class NeuralNet {
         void singleEpoch(const string &trainingSetFile, const double &learningRate);
 
         // 1 / (1 + e^d)
-        [[nodiscard]] inline double sigmoid(double d) const {return 1.0/(1.0+exp(d));}
+        [[nodiscard]] inline constexpr double sigmoid(const double &d) const {return 1.0/(1.0+exp(d));}
 
         // nodeOutput * (1 - nodeOutput)
-        [[nodiscard]] inline double sigmoidPrime(double nodeOutput) const {return nodeOutput*(1-nodeOutput);}
+        [[nodiscard]] inline constexpr double sigmoidPrime(const double &nodeOutput) const {return nodeOutput*(1-nodeOutput);}
 
         // helper function for printing doubles up to given decimal places
-        [[nodiscard]] string doubleToString(double d, int decimals = 3) const;
+        [[nodiscard]] string doubleToString(const double &d, const int &decimals = 3) const;
 };

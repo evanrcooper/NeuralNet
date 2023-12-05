@@ -56,7 +56,7 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
-string NeuralNet::doubleToString(double d, int decimals) const {
+string NeuralNet::doubleToString(const double &d, const int &decimals) const {
 
     string doubleAsString = to_string(d);
     string preciseDouble= "";
@@ -107,7 +107,7 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
     return;
 }
 
-vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs) {
+vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs) const {
     // calculate the values of the hidden layer nodes
     vector<double> hiddenLayerValues = vector<double>();
     
@@ -241,5 +241,7 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
 
     }
 
-    if (file.is_open()) {file.close();}
+    if (file.is_open()) {
+        file.close();
+    }
 }

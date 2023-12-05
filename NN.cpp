@@ -202,6 +202,8 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
         vector<double> outputDeltas = vector<double>(outputNodes); // output deltas
         vector<double> hiddenLayerDeltas = vector<double>(hiddenLayerNodes, 0.0);
 
+        
+
         for (int o = 0; o < outputNodes; o++) {
             outputDeltas[o] = sigmoidPrime(outputs[o]) * (desiredOutputs[o] - outputs[o]);
         }

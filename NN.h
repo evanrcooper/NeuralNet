@@ -53,11 +53,11 @@ class NeuralNet {
         // trains neural net for a single epoch on the entire test set
         void singleEpoch(const string &trainingSetFile, const double &learningRate);
 
-        // 1 / (1 + e^d)
-        [[nodiscard]] inline constexpr double sigmoid(const double &d) const {return 1.0/(1.0+exp(d));}
+        // 1 / (1 + e^-d)
+        [[nodiscard]] inline constexpr double sigmoid(const double &d) const {return 1.0/(1.0+exp(-d));}
 
         // nodeOutput * (1 - nodeOutput)
-        [[nodiscard]] inline constexpr double sigmoidPrime(const double &nodeOutput) const {return nodeOutput*(1-nodeOutput);}
+        [[nodiscard]] inline constexpr double sigmoidPrime(const double &nodeOutput) const {return nodeOutput*(1.0-nodeOutput);}
 
         // helper function for printing doubles up to given decimal places
         [[nodiscard]] string doubleToString(const double &d, const int &decimals = 3) const;

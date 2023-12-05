@@ -8,7 +8,7 @@ NN.o: NN.cpp NN.h
 	g++ -c NN.cpp
 
 debug:
-	g++ -g -o mainDebug.exe main.o NN.o
+	g++ -g -o mainDebug.exe main.cpp NN.cpp
 	gdb mainDebug.exe
 
 clean:

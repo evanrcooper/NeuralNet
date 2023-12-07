@@ -107,6 +107,7 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
     return;
 }
 
+// forward propagation
 vector<double> NeuralNet::runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs) const {
     // calculate the values of the hidden layer nodes
     vector<double> hiddenLayerValues = vector<double>();

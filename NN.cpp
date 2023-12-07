@@ -78,6 +78,7 @@ string NeuralNet::doubleToString(const double &d, const int &decimals) const {
             break;
         }
     }
+
     return preciseDouble;
 }
 
@@ -89,18 +90,22 @@ void NeuralNet::saveNeuralNet(string outputFileName) {
     file << inputNodes << " " << hiddenLayerNodes << " " << outputNodes << "\n";
     for (int h = 0; h < hiddenLayerNodes; h++) {
         if (h != 0) {file << "\n";}
-        file << doubleToString(hiddenLayerBiases[h]) << " ";
+        file << fixed << setprecision(3);
+        file << hiddenLayerBiases[h] << " ";
         for (int i = 0; i < inputNodes; i++) {
             if (i != 0) {file << " ";}
-            file << doubleToString((*inputToHiddenLayerWeights[h])[i]);
+            file << fixed << setprecision(3);
+            file << (*inputToHiddenLayerWeights[h])[i];
         }
     }
     for (int o = 0; o < outputNodes; o++) {
         file << "\n";
-        file << doubleToString(outputBiases[o]) << " ";
+        file << fixed << setprecision(3);
+        file << outputBiases[o] << " ";
         for (int h = 0; h < hiddenLayerNodes; h++) {
             if (h != 0) {file << " ";}
-            file << doubleToString((*hiddenLayerToOutputWeights[o])[h]);
+            file << fixed << setprecision(3);
+            file << (*hiddenLayerToOutputWeights[o])[h];
         }
     }
     file.close();
@@ -183,7 +188,7 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
         stringstream buffer(line);
         vector<double> inputs = vector<double>(inputNodes);
         vector<double> desiredOutputs = vector<double>(outputNodes);
-
+        
         string currentInput;
         for (int i = 0; i < inputNodes; i++) {
             buffer >> currentInput;
@@ -202,8 +207,6 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
 
         vector<double> outputDeltas = vector<double>(outputNodes); // output deltas
         vector<double> hiddenLayerDeltas = vector<double>(hiddenLayerNodes, 0.0);
-
-        
 
         for (int o = 0; o < outputNodes; o++) {
             outputDeltas[o] = sigmoidPrime(outputs[o]) * (desiredOutputs[o] - outputs[o]);
@@ -239,7 +242,7 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
 
         // output biases
         for (int o = 0; o < outputNodes; o++) {
-            hiddenLayerBiases[o] += (-1)*learningRate*outputDeltas[o];
+            outputBiases[o] += (-1)*learningRate*outputDeltas[o];
         }
 
     }

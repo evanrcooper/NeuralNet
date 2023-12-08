@@ -31,7 +31,7 @@ class NeuralNet {
         void buildNeuralNet(string inputFileName);
 
         // saves the weights and biases to a file
-        void saveNeuralNet(string outputFileName);
+        void saveNeuralNet(string outputFileName) const;
 
         // runs the neural net on a single input case and stores the outputs of each node in the hidden layer
         vector<double> runNeuralNet(const vector<double> &inputs, vector<double> *hiddenLayerOutputs = nullptr) const;
@@ -39,7 +39,20 @@ class NeuralNet {
         // trains the neural net on the given test set for specified epochs
         void trainNeuralNet(const string &trainingSetFile, const unsigned long int &epochs, const double &learningRate);
 
+        // produces a contigency table for the given test set
+        [[nodiscard]] vector<confusionMatrix> makeContingencyTable(const string &testSetFileName) const;
+        
     private:
+
+        struct confusionMatrix {
+            confusionMatrix(int A = 0, int B = 0, int C = 0, int D = 0) {
+                this->A = A;
+                this->B = B;
+                this->C = C;
+                this->D = D;
+            }
+            int A, B, C, D;
+        };
 
         int inputNodes = 0; // number of input nodes
         int hiddenLayerNodes = 0; // number of nodes in the hidden layer

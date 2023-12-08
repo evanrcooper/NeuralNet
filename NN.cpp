@@ -82,7 +82,7 @@ string NeuralNet::doubleToString(const double &d, const int &decimals) const {
     return preciseDouble;
 }
 
-void NeuralNet::saveNeuralNet(string outputFileName) {
+void NeuralNet::saveNeuralNet(string outputFileName) const {
     ofstream file(outputFileName);
     if (!file.is_open()) {
         cerr << "Error Creating File";
@@ -250,4 +250,80 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
     if (file.is_open()) {
         file.close();
     }
+}
+
+vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFileName) const {
+
+    // open file
+    fstream file;
+    file.open(testSetFileName);
+    if (!file.is_open()) {
+        cerr << "File Does Not Exist";
+    }
+
+    string line, testSetLength, inputLength, outputLength, input, output;
+    getline(file, line);
+    stringstream buffer(line);
+    
+    buffer >> testSetLength;
+    buffer >> inputLength;
+    buffer >> outputLength;
+
+    if (stoi(inputLength) != inputNodes || stoi(outputLength) != outputNodes) {
+        cout << "File Name To Save Neural Net";
+        string saveFileName;
+        cin >> saveFileName;
+        saveNeuralNet(saveFileName);
+        cerr << "Neural Net Is Incompatible With Test Set";
+    }
+
+    vector<confusionMatrix> matrices = vector<confusionMatrix>(outputNodes);
+    for (int o = 0; o < outputNodes; o++) {
+        matrices[o] = confusionMatrix();
+    }
+
+    for (int t = 0; t < stoi(testSetLength); t++) {
+
+        getline(file, line);
+        stringstream buffer(line);
+
+        vector<double> inputs = vector<double>(inputNodes);
+        vector<int> expectedOutputs = vector<int>(outputNodes);
+
+        for (int i = 0; i < inputNodes; i++) {
+            buffer >> input;
+            inputs[i] = stod(input);
+        }
+
+        for (int o = 0; o < outputNodes; o++) {
+            buffer >> output;
+            expectedOutputs[o] = stoi(output);
+        }
+
+        vector<double> actualOutputs = this->runNeuralNet(inputs);
+
+        for (int o = 0; o < outputNodes; o++) {
+
+            if (expectedOutputs[o] == 1) {
+                if (actualOutputs[o] >= 0.5) {
+                    matrices[o].A++;
+                } else if (actualOutputs[o] < 0.5) {
+                    matrices[o].C++;
+                }
+            } else if (expectedOutputs[o] == 0) {
+                if (actualOutputs[o] >= 0.5) {
+                    matrices[o].B++;
+                } else if (actualOutputs[o] < 0.5){
+                    matrices[o].D++;
+                }
+            } else {
+                cerr << "Expected Boolean Output In Test Set";
+            }
+
+        }
+
+    }
+
+    return matrices;
+
 }

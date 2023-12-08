@@ -329,5 +329,29 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
 }
 
  void NeuralNet::printMetrics(const string &testSetFileName, const string &outputFileName) const {
-    return;
+
+    // #define TABLE_OFFSET 16
+
+    // ofstream myfile;
+
+    // myfile.open("exampleTable.txt");
+
+    // myfile << setw(20) << "number" << setw(20) << "Angle (rads)" << setw(20) << "Time (s)" << setw(20) << "Max height (m)" << setw(20) << "Max distance (m)" << endl;
+
+    // int n = 0;
+    // int num = 4;
+
+    // while (n++ < num) {
+
+    //     myfile  << setw(TABLE_OFFSET) << n 
+    //             << setw(TABLE_OFFSET) << n 
+    //             << setw(TABLE_OFFSET) << n 
+    //             << setw(TABLE_OFFSET) << n 
+    //             << setw(TABLE_OFFSET) << n 
+    //             << endl;
+
+    // }
+
+    // myfile.close();
+    
  }

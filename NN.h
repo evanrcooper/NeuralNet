@@ -7,6 +7,16 @@
 
 using namespace std;
 
+struct confusionMatrix {
+    confusionMatrix(int A = 0, int B = 0, int C = 0, int D = 0) {
+        this->A = A;
+        this->B = B;
+        this->C = C;
+        this->D = D;
+    }
+    int A, B, C, D;
+};
+
 class NeuralNet {
 
     public:
@@ -67,14 +77,4 @@ class NeuralNet {
 
         // helper function for printing doubles up to given decimal places
         [[nodiscard]] string doubleToString(const double &d, const int &decimals = 3) const;
-};
-
-struct confusionMatrix {
-    confusionMatrix(int A = 0, int B = 0, int C = 0, int D = 0) {
-        this->A = A;
-        this->B = B;
-        this->C = C;
-        this->D = D;
-    }
-    int A, B, C, D;
 };

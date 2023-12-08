@@ -327,3 +327,7 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
     return matrices;
 
 }
+
+ void NeuralNet::printMetrics(const string &testSetFileName, const string &outputFileName) const {
+    return;
+ }

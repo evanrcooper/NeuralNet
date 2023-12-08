@@ -41,18 +41,11 @@ class NeuralNet {
 
         // produces a contigency table for the given test set
         [[nodiscard]] vector<confusionMatrix> makeContingencyTable(const string &testSetFileName) const;
+
+        // saves the accuracy, precision, recall, and etc. for each output of the NeuralNet to the given file
+        void printMetrics(const string &testSetFileName, const string &outputFileName) const;
         
     private:
-
-        struct confusionMatrix {
-            confusionMatrix(int A = 0, int B = 0, int C = 0, int D = 0) {
-                this->A = A;
-                this->B = B;
-                this->C = C;
-                this->D = D;
-            }
-            int A, B, C, D;
-        };
 
         int inputNodes = 0; // number of input nodes
         int hiddenLayerNodes = 0; // number of nodes in the hidden layer
@@ -74,4 +67,14 @@ class NeuralNet {
 
         // helper function for printing doubles up to given decimal places
         [[nodiscard]] string doubleToString(const double &d, const int &decimals = 3) const;
+};
+
+struct confusionMatrix {
+    confusionMatrix(int A = 0, int B = 0, int C = 0, int D = 0) {
+        this->A = A;
+        this->B = B;
+        this->C = C;
+        this->D = D;
+    }
+    int A, B, C, D;
 };

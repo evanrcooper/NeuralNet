@@ -3,3 +3,5 @@
 > Cooper Union ECE-469 (Artificial Intellegence)
 >
 > Evan Rosenfeld
+
+Compiled With Ubuntu

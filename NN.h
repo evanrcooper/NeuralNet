@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <cassert>
 
 using namespace std;
 
@@ -75,6 +76,4 @@ class NeuralNet {
         // nodeOutput * (1 - nodeOutput)
         [[nodiscard]] inline constexpr double sigmoidPrime(const double &nodeOutput) const {return nodeOutput*(1.0-nodeOutput);}
 
-        // helper function for printing doubles up to given decimal places
-        [[nodiscard]] string doubleToString(const double &d, const int &decimals = 3) const;
 };

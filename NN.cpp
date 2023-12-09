@@ -56,32 +56,6 @@ void NeuralNet::buildNeuralNet(string inputFileName) {
     file.close();
 }
 
-string NeuralNet::doubleToString(const double &d, const int &decimals) const {
-
-    string doubleAsString = to_string(d);
-    string preciseDouble= "";
-    
-    for (int i = 0; i < doubleAsString.length(); i++) {
-        if (doubleAsString[i] != '.') {
-            preciseDouble.push_back(doubleAsString[i]);
-            continue;
-        } else {
-            i++;
-            preciseDouble.push_back('.');
-            for (int j = 0; j < decimals; j++) {
-                if (i+j < doubleAsString.length()) {
-                    preciseDouble.push_back(doubleAsString[i+j]);
-                } else {
-                    preciseDouble.push_back('0');
-                }
-            }
-            break;
-        }
-    }
-
-    return preciseDouble;
-}
-
 void NeuralNet::saveNeuralNet(string outputFileName) const {
     ofstream file(outputFileName);
     if (!file.is_open()) {
@@ -158,7 +132,7 @@ void NeuralNet::trainNeuralNet(const string &trainingSetFile, const unsigned lon
 
     for (int e = 0; e < epochs; e++) {
         singleEpoch(trainingSetFile, learningRate);
-        cout << "Epoch #" << e+1 << " Completed\n";
+        // cout << "Epoch #" << e+1 << " Completed\n";
     }
 
     file.close();
@@ -169,20 +143,20 @@ void NeuralNet::singleEpoch(const string &trainingSetFile, const double &learnin
     fstream file;
     file.open(trainingSetFile);
 
-    string line, testCasesStr, testInputsStr, testOutputsStr;
+    string line, trainingExamplesStr, testInputsStr, testOutputsStr;
     getline(file, line);
     stringstream bufferFirstLine(line);
 
-    bufferFirstLine >> testCasesStr;
+    bufferFirstLine >> trainingExamplesStr;
     bufferFirstLine >> testInputsStr;
     bufferFirstLine >> testOutputsStr;
 
-    int testCases = stoi(testCasesStr);
+    int trainingExamples = stoi(trainingExamplesStr);
     if (inputNodes != stoi(testInputsStr) && outputNodes != stoi(testOutputsStr)) {
         cerr << "Test File Is Not Compatible With Neural Net";
     }
 
-    for (int t = 0; t < testCases; t++) {
+    for (int t = 0; t < trainingExamples; t++) {
 
         getline(file, line);
         stringstream buffer(line);
@@ -281,8 +255,14 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
     for (int o = 0; o < outputNodes; o++) {
         matrices[o] = confusionMatrix();
     }
+    
+    int testCases = stoi(testSetLength);
 
-    for (int t = 0; t < stoi(testSetLength); t++) {
+    if (testCases <= 0) {
+        cerr << "Invalid Test Case File";
+    }
+
+    for (int t = 0; t < testCases; t++) {
 
         getline(file, line);
         stringstream buffer(line);
@@ -330,28 +310,118 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
 
  void NeuralNet::printMetrics(const string &testSetFileName, const string &outputFileName) const {
 
-    // #define TABLE_OFFSET 16
+    ofstream file(outputFileName);
+    if (!file.is_open()) {
+        cerr << "Error Creating File";
+    }
 
-    // ofstream myfile;
+    vector<confusionMatrix> matrices = makeContingencyTable(testSetFileName);
 
-    // myfile.open("exampleTable.txt");
+    double macroAvgAccuracy = 0.0;
+    double macroAvgPrecision = 0.0;
+    double macroAvgRecall = 0.0;
+    double macroAvgF1 = 0.0;
 
-    // myfile << setw(20) << "number" << setw(20) << "Angle (rads)" << setw(20) << "Time (s)" << setw(20) << "Max height (m)" << setw(20) << "Max distance (m)" << endl;
+    int globalA = 0;
+    int globalB = 0;
+    int globalC = 0;
+    int globalD = 0;
 
-    // int n = 0;
-    // int num = 4;
+    for (int o = 0; o < outputNodes; o++) {
 
-    // while (n++ < num) {
+        int A = matrices[o].A;
+        globalA += A;
 
-    //     myfile  << setw(TABLE_OFFSET) << n 
-    //             << setw(TABLE_OFFSET) << n 
-    //             << setw(TABLE_OFFSET) << n 
-    //             << setw(TABLE_OFFSET) << n 
-    //             << setw(TABLE_OFFSET) << n 
-    //             << endl;
+        int B = matrices[o].B;
+        globalB += B;
+        
+        int C = matrices[o].C;
+        globalC += C;
+        
+        int D = matrices[o].D;
+        globalD += D;
+        
+        /*
+            (1)	Overall accuracy = (A + D) / (A + B + C + D);
+            (2)	Precision = A / (A + B);
+            (3)	Recall = A / (A + C);
+            (4)	F1 = (2 * Precision * Recall) / (Precision + Recall);
+        */
 
-    // }
+        if ((A + B) == 0 || (A + C) == 0) {
+            cerr << "Division By 0: NeuralNet::printMetrics()";
+        }
 
-    // myfile.close();
+        double accuracy = (A + D) / (A + B + C + D);
+        macroAvgAccuracy += accuracy;
+
+        double precision = A / (A + B);
+        macroAvgPrecision += precision;
+        
+        double recall = A / (A + C);
+        macroAvgRecall += recall;
+        
+        double f1 = (2 * precision * recall) / (precision + recall);
+        macroAvgF1 += f1;
+        
+
+        file << A << " ";
+        file << B << " ";
+        file << C << " ";
+        file << D << " ";
+
+        file << fixed << setprecision(3);
+        file << accuracy << " ";
+
+        file << fixed << setprecision(3);
+        file << precision << " ";
+
+        file << fixed << setprecision(3);
+        file << recall << " ";
+
+        file << fixed << setprecision(3);
+        file << f1 << '\n';
+
+    }
+
+    // Micro Averages
+
+    double microAvgAccuracy = (globalA + globalD) / (globalA + globalB + globalC + globalD);
+    double microAvgPrecision = globalA / (globalA + globalB);
+    double microAvgRecall = globalA / (globalA + globalC);
+    double microAvgF1 = (2 * microAvgPrecision * microAvgRecall) / (microAvgPrecision + microAvgRecall);
+
+    file << fixed << setprecision(3);
+    file << microAvgAccuracy << " ";
+
+    file << fixed << setprecision(3);
+    file << microAvgPrecision << " ";
+    
+    file << fixed << setprecision(3);
+    file << microAvgRecall << " ";
+    
+    file << fixed << setprecision(3);
+    file << microAvgF1 << '\n';
+
+    // Macro Averages
+
+    macroAvgAccuracy /= outputNodes;
+    macroAvgPrecision /= outputNodes;
+    macroAvgRecall /= outputNodes;
+    macroAvgF1 /= outputNodes;
+
+    file << fixed << setprecision(3);
+    file << macroAvgAccuracy << " ";
+
+    file << fixed << setprecision(3);
+    file << macroAvgPrecision << " ";
+    
+    file << fixed << setprecision(3);
+    file << macroAvgRecall << " ";
+    
+    file << fixed << setprecision(3);
+    file << macroAvgF1 << '\n';
+
+    file.close();
     
  }

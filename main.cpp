@@ -10,47 +10,56 @@ double getLearningRate();
 
 int main() {
 
+    const string OFFSET = "  ";
+
     NeuralNet net = NeuralNet();
 
     char c;
     string selection, inputFileName, outputFileName;
-    int epochs;
-    double learningRate;
 
     do {
-        cout << "Choose 1-5: ";
+
+        cout << "\n" << "Options:\n";
+        cout << OFFSET << "1. Build Neural Net From File\n";
+        cout << OFFSET << "2. Save Neural Net To A File\n";
+        cout << OFFSET << "3. Train Neural Net From A File\n";
+        cout << OFFSET << "4. Test And Save Results Of Neural Net\n";
+        cout << OFFSET << "5. Quit\n";
+        cout << "Choice: ";
+
         cin >> selection;
         while (!isValidSelection(selection)) {
             cout << "Invalid, Choose 1-5: ";
             cin >> selection;
         }
         c = selection[0];
+
         switch (c) {
 
             // Build Neural Net
             case '1':
-                cout << "File To Build Neural Net From: ";
+                cout << "\n" << "File To Build Neural Net From: ";
                 cin >> inputFileName;
                 net.buildNeuralNet(inputFileName);
                 break;
 
             // Save Neural Net
             case '2':
-                cout << "File To Save Neural Net To: ";
+                cout << "\n" << "File To Save Neural Net To: ";
                 cin >> outputFileName;
                 net.saveNeuralNet(outputFileName);
                 break;
 
             // Train Neural Net
             case '3':
-                cout << "File To Train Neural Net From: ";
+                cout << "\n" << "File To Train Neural Net From: ";
                 cin >> inputFileName;
                 net.trainNeuralNet(inputFileName, getEpochs(), getLearningRate());
                 break;
 
             // Test Neural Net
             case '4':
-                cout << "File To Test Neural Net From: ";
+                cout << "\n" << "File To Test Neural Net From: ";
                 cin >> inputFileName;
                 cout << "File To Save Results To: ";
                 cin >> outputFileName;
@@ -59,11 +68,11 @@ int main() {
 
             // Quit
             case '5':
-                cout << "Quitting...";
+                cout << "\n" << "Quitting..." << "\n\n";
                 break;
 
             default:
-                cerr << "Invalid Choice\n";
+                cerr << "Invalid Choice...\n";
         }
 
     } while (c != '5');
@@ -123,7 +132,7 @@ double getLearningRate() {
 
     do {
 
-        cout << "Number Of Epochs: ";
+        cout << "Learning Rate: ";
         cin >> input;
 
         try {

@@ -420,7 +420,7 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
     file << macroAvgRecall << " ";
     
     file << fixed << setprecision(3);
-    file << macroAvgF1 << '\n';
+    file << macroAvgF1;
 
     file.close();
     

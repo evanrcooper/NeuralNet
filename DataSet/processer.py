@@ -15,24 +15,25 @@ outputCount = input('Number Of Outputs: ')
 training = open(input('File Name To Save Training Set To: '), 'w')
 training.write(str(trainingLength)+" "+inputCount+" "+outputCount+"\n")
 for i in range(trainingLength-1):
-    training.write(lines[i][:-2].replace(',', ' '))
-    training.write(str(ord(lines[i][-2])-ord('1')))
+    ls = lines[i][:-1].split(',')
+    training.write(ls[0]+" "+ls[2]+" "+str(int(ls[3])-1))
     training.write("\n")
 
-training.write(lines[trainingLength-1][:-2].replace(',', ' '))
-training.write(str(ord(lines[trainingLength-1][-2])-ord('1')))
+training.write(lines[trainingLength-1][:-1].replace(',', ' '))
+ls = lines[trainingLength-1][:-1].split(',')
+training.write(ls[0]+" "+ls[2]+" "+str(int(ls[3])-1))
 
 training.close()
 
 testing = open(input('File Name To Save Test Set To: '), 'w')
 testing.write(str(testLength)+" "+inputCount+" "+outputCount+"\n")
 for i in range(testLength-1):
-    testing.write(lines[i+trainingLength][:-2].replace(',', ' '))
-    testing.write(str(ord(lines[i+trainingLength][-2])-ord('1')))
+    ls = lines[i+trainingLength][:-1].split(',')
+    testing.write(ls[0]+" "+ls[2]+" "+str(int(ls[3])-1))
     testing.write("\n")
 
 
-testing.write(lines[testLength+trainingLength-1][:-2].replace(',', ' '))
-testing.write(str(ord(lines[testLength+trainingLength-1][-2])-ord('1')))
+ls = lines[testLength+trainingLength-1][-2].split(',')
+testing.write(ls[0]+" "+ls[2]+" "+str(int(ls[3])-1))
 
 testing.close()

@@ -1,0 +1,30 @@
+https://www.kaggle.com/datasets/tanshihjen/early-stage-diabetes-risk-prediction/data
+
+Dataset Description: Early Stage Diabetes Risk Prediction
+
+This dataset comprises crucial sign and symptom data of individuals who either exhibit early signs of diabetes or are at risk of developing diabetes. The variables included in the dataset provide valuable insights into potential indicators of diabetes onset. The dataset encompasses diverse information, ranging from demographic details to specific symptoms associated with diabetes.
+
+Attributes Description:
+
+Inputs:
+1. Age (1-20 to 65): Age range of the individuals.
+2. Sex (1. Male, 2. Female): Gender information.
+3. Polyuria (1. Yes, 2. No): Presence of excessive urination.
+4. Polydipsia (1. Yes, 2. No): Excessive thirst.
+5. Sudden Weight Loss (1. Yes, 2. No): Abrupt weight loss.
+6. Weakness (1. Yes, 2. No): Generalized weakness.
+7. Polyphagia (1. Yes, 2. No): Excessive hunger.
+8. Genital Thrush (1. Yes, 2. No): Presence of genital thrush.
+9. Visual Blurring (1. Yes, 2. No): Blurring of vision.
+10. Itching (1. Yes, 2. No): Presence of itching.
+11. Irritability (1. Yes, 2. No): Display of irritability.
+12. Delayed Healing (1. Yes, 2. No): Delayed wound healing.
+13. Partial Paresis (1. Yes, 2. No): Partial loss of voluntary movement.
+14. Muscle Stiffness (1. Yes, 2. No): Presence of muscle stiffness.
+15. Alopecia (1. Yes, 2. No): Hair loss.
+16. Obesity (1. Yes, 2. No): Presence of obesity.
+
+Output:
+1. Class (1. Positive, 2. Negative): Diabetes classification.
+
+This dataset serves as a valuable resource for the development and validation of predictive models for early-stage diabetes risk assessment. Researchers and healthcare professionals can leverage this dataset to gain insights into the relationships between various symptoms and the likelihood of developing diabetes, ultimately contributing to the advancement of early intervention strategies.

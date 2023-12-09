@@ -352,16 +352,16 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
             cerr << "Division By 0: NeuralNet::printMetrics()";
         }
 
-        double accuracy = (A + D) / (A + B + C + D);
+        double accuracy = double(A + D) / (A + B + C + D);
         macroAvgAccuracy += accuracy;
 
-        double precision = A / (A + B);
+        double precision = double(A) / (A + B);
         macroAvgPrecision += precision;
         
-        double recall = A / (A + C);
+        double recall = double(A) / (A + C);
         macroAvgRecall += recall;
         
-        double f1 = (2 * precision * recall) / (precision + recall);
+        double f1 = double(2 * precision * recall) / (precision + recall);
         macroAvgF1 += f1;
         
 
@@ -386,10 +386,10 @@ vector<confusionMatrix> NeuralNet::makeContingencyTable(const string &testSetFil
 
     // Micro Averages
 
-    double microAvgAccuracy = (globalA + globalD) / (globalA + globalB + globalC + globalD);
-    double microAvgPrecision = globalA / (globalA + globalB);
-    double microAvgRecall = globalA / (globalA + globalC);
-    double microAvgF1 = (2 * microAvgPrecision * microAvgRecall) / (microAvgPrecision + microAvgRecall);
+    double microAvgAccuracy = double(globalA + globalD) / (globalA + globalB + globalC + globalD);
+    double microAvgPrecision = double(globalA) / (globalA + globalB);
+    double microAvgRecall = double(globalA) / (globalA + globalC);
+    double microAvgF1 = double(2 * microAvgPrecision * microAvgRecall) / (microAvgPrecision + microAvgRecall);
 
     file << fixed << setprecision(3);
     file << microAvgAccuracy << " ";

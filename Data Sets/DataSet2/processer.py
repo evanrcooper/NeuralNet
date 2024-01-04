@@ -26,15 +26,19 @@ def dataToInt(data):
         case "Yes" :
             return 1
         case "No" :
-            return 2
+            return 0
         case "Male" :
             return 1
         case "Female" :
-            return 2
+            return 0
         case "Positive" :
             return 1
         case "Negative" :
             return 0
+        case 1 :
+            return 0
+        case 2 :
+            return 1
         case _ :
           return data
 

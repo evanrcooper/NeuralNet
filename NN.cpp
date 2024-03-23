@@ -132,7 +132,7 @@ void NeuralNet::trainNeuralNet(const string &trainingSetFile, const unsigned lon
 
     for (int e = 0; e < epochs; e++) {
         singleEpoch(trainingSetFile, learningRate);
-        // cout << "Epoch #" << e+1 << " Completed\n";
+        cout << "Epoch #" << e+1 << " Completed\n";
     }
 
     file.close();
